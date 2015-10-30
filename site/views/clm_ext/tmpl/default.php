@@ -2,7 +2,7 @@
 
 /**
   * @ CLM Extern Component
- * @Copyright (C) 2008-2014 Thomas Schwietert & Andreas Dorn. All rights reserved
+ * @Copyright (C) 2008-2015 CLM Team.  All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.chessleaguemanager.de
  * @author Thomas Schwietert
@@ -82,33 +82,40 @@ if ($ext_view =="rangliste" OR $ext_view =="paarungsliste" OR $ext_view =="dwz_l
 	$link 		= $ext_url.DS.'index.php?option=com_clm&view='.$ext_view.'&format=raw&html=0&saison='.$saison.'&liga='.$liga;
 	}
 
-if ($ext_view =="runde") {
+else if ($ext_view =="runde") {
 	$link = $ext_url.DS.'index.php?option=com_clm&view='.$ext_view.'&format=raw&html=0&saison='.$saison.'&liga='.$liga.'&runde='.$runde.'&dg='.$dg;
 	$path = "option=com_clm_ext&amp;view=clm_ext&amp;url=$urla&amp;ext_view=";
 	}
 	
 // sekundäre Views durch Links	
-if ($ext_view =="mannschaft") {
+else if ($ext_view =="mannschaft") {
 	$link = $ext_url.DS.'index.php?option=com_clm&view='.$ext_view.'&format=raw&html=0&saison='.$saison.'&liga='.$liga.'&tlnr='.$tlnr;
 	$path = "option=com_clm_ext&amp;view=clm_ext&amp;url=$urla&amp;ext_view=";
 	}
-if ($ext_view =="verein") {
+else if ($ext_view =="verein") {
 	$link = $ext_url.DS.'index.php?option=com_clm&view='.$ext_view.'&format=raw&html=0&saison='.$saison.'&zps='.$zps;
 	$path = "option=com_clm_ext&amp;view=clm_ext&amp;url=$urla&amp;ext_view=";
 	}
-if ($ext_view =="dwz") {
+else if ($ext_view =="dwz") {
 	$link = $ext_url.DS.'index.php?option=com_clm&view='.$ext_view.'&format=raw&html=0&saison='.$saison.'&zps='.$zps;
 	}
-if ($ext_view =="spieler") {
+else if ($ext_view =="spieler") {
 	$link = $ext_url.DS.'index.php?option=com_clm&view='.$ext_view.'&format=raw&html=0&saison='.$saison.'&zps='.$zps.'&mglnr='.$mglnr;
 	$path = "option=com_clm_ext&amp;view=clm_ext&amp;url=$urla&amp;ext_view=";
 	}
-if ($ext_view =="vereinsliste") {
-	$link = $ext_url.DS.'index.php?option=com_clm&view='.$ext_view.'&format=raw&html=0&saison='.$saison.
+else if ($ext_view =="vereinsliste") {
+	$link = $ext_url.DS.'index.php?option=com_clm&view='.$ext_view.'&format=raw&html=0&saison='.$saison;
 	$path = "option=com_clm_ext&amp;view=clm_ext&amp;url=$urla&amp;ext_view=";
 	}
-if ($ext_view =="termine") {
-	$link = $ext_url.DS.'index.php?option=com_clm&view='.$ext_view.'&format=raw&html=0&saison='.$saison.
+else if ($ext_view =="termine") {
+	$link = $ext_url.DS.'index.php?option=com_clm&view='.$ext_view.'&format=raw&html=0&saison='.$saison;
+	$path = "option=com_clm_ext&amp;view=clm_ext&amp;url=$urla&amp;ext_view=";
+	}
+else if ($ext_view =="info") {
+	$link = $ext_url.DS.'index.php?option=com_clm&view='.$ext_view.'&format=raw&html=0&saison='.$saison;
+	$path = "option=com_clm_ext&amp;view=clm_ext&amp;url=$urla&amp;ext_view=";
+} else {
+	$link = $ext_url.DS.'index.php?option=com_clm&view='.$ext_view.'&format=raw&html=0&saison='.$saison;
 	$path = "option=com_clm_ext&amp;view=clm_ext&amp;url=$urla&amp;ext_view=";
 	}
 	
@@ -119,6 +126,12 @@ if ($ext_view =="termine") {
 	$url_trans	= '&';
 	$data		= preg_replace ( $url_org0, $url_trans, $data, -1, $anz );
 
+	// Änderungen für CLM 3.2 
+	$url_org0 	= array('class="clm"','.clm');
+	$url_trans	= array('id="clm"','');
+	$data 		= str_replace($url_org0, $url_trans, $data);
+	// Ende Änderungen
+	
 	// Sonderfall www.schachjugend-nrw.de
 	if ($url_sj == 'www.schachjugend-nrw.de') {
 		$url_org00 = '#/ergebnisdienst/#';
@@ -175,6 +188,7 @@ if ($ext_view =="termine") {
 	$url_trans	= 'value="'.JURI::base().'index.php';
 	$data		= preg_replace ( '#'.$url_org1.'#', $url_trans, $data, -1, $anz );
 	
+/* PDF Ausgabe nicht umsetzen!
 if ($ext_view =="rangliste" OR $ext_view =="dwz" OR $ext_view =="runde" OR $ext_view =="paarungsliste") {
 	// PDF Adresse ersetzen - Suchmaschinenfreundliche URLs auf gerufener Seite: Nein
 	$pdf_org	= '#'.JURI::base()."index.php\?option=com_clm&amp;view=$ext_view&amp;format=clm_pdf#";
@@ -193,7 +207,7 @@ if ($ext_view =="rangliste" OR $ext_view =="dwz" OR $ext_view =="runde" OR $ext_
 	}
 	$data		= preg_replace ( $pdf_org, $pdf_trans, $data );
 	}
-	
+*/	
 	// Alle anderen ersetzen - Suchmaschinenfreundliche URLs auf gerufener Seite: Nein
 	$url_org	= JURI::base().'index.php\?option=com_clm&view=';
 	$url_trans	= JURI::base()."index.php?option=com_clm_ext&view=clm_ext&url=$urla&amp;ext_view=";
@@ -204,6 +218,10 @@ if ($ext_view =="rangliste" OR $ext_view =="dwz" OR $ext_view =="runde" OR $ext_
 	$data		= preg_replace ( '#'.$url_org.'#', $url_trans, $data, -1, $anz );
 	// Alle anderen ersetzen - Suchmaschinenfreundliche URLs auf gerufener Seite: Ja und mod_rewrite Nein  (Landesseite)
 	$url_org	= '#'.JURI::base().'index.php/component/clm/\?view=#';
+	$url_trans	= JURI::base()."index.php?option=com_clm_ext&view=clm_ext&url=$urla&ext_view=";
+	$data		= preg_replace ( $url_org, $url_trans, $data, -1, $anz );
+	// Alle anderen ersetzen - Suchmaschinenfreundliche URLs auf gerufener Seite: Ja und mod_rewrite Nein  (sbrp.de)
+	$url_org	= '#'.JURI::base().'index.php/de/component/clm/\?view=#';             // und Mehrsprachigkeit mit Standard de              
 	$url_trans	= JURI::base()."index.php?option=com_clm_ext&view=clm_ext&url=$urla&ext_view=";
 	$data		= preg_replace ( $url_org, $url_trans, $data, -1, $anz );
 	// Alle anderen ersetzen - Suchmaschinenfreundliche URLs auf gerufener Seite: Ja und mod_rewrite Ja     (Dessau)

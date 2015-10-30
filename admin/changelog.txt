@@ -1,4 +1,4 @@
-﻿CHANGELOG 2.5 com_clm_ext ab 1.1.0
+﻿CHANGELOG 2.5 com_clm_ext ab 1.1.0 --> 3.x ab 3.2.2
 ------------
 
 Legend:
@@ -10,6 +10,19 @@ $ -> Language fix or change
 % -> Performance Fix
 - -> Removed
 ! -> Note
+
+- - - - - 3.2.4 - [30-10-2015] - - - - - - - - - - - - - - - - - - - -
+# Bereinigung der repo-Struktur
+# Nachbesserung css-Technik
++ Unterstützung von Quellseiten mit Mehrsprachigkeit
+
+- - - - - 3.2.3 - [07-09-2015] - - - - - - - - - - - - - - - - - - - -
+# Joomla 3.x Support
+# Umstellung der css-Technik
+
+- - - - - 3.2.2 - [19-04-2015] - - - - - - - - - - - - - - - - - - - -
+# Joomla 3.x Support
++ eigenständige source für J!3.x
 
 - - - - - 1.2.2 - [06-08-2014] - - - - - - - - - - - - - - - - - - - -
 # Joomla 3.x Support
