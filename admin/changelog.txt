@@ -11,6 +11,10 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+- - - - - 1.2.3 - [02-11-2015] - - - - - - - - - - - - - - - - - - - -
+# Nachbesserung css-Technik
++ Unterstützung von Quellseiten mit Mehrsprachigkeit
+
 - - - - - 1.2.2 - [06-08-2014] - - - - - - - - - - - - - - - - - - - -
 # Joomla 3.x Support
 ^ Code Bereinigung

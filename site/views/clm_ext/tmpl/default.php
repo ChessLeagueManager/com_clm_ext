@@ -2,7 +2,7 @@
 
 /**
   * @ CLM Extern Component
- * @Copyright (C) 2008-2014 Thomas Schwietert & Andreas Dorn. All rights reserved
+ * @Copyright (C) 2008-2015 CLM Team.  All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.chessleaguemanager.de
  * @author Thomas Schwietert
@@ -119,6 +119,12 @@ if ($ext_view =="termine") {
 	$url_trans	= '&';
 	$data		= preg_replace ( $url_org0, $url_trans, $data, -1, $anz );
 
+	// Änderungen für CLM 3.2 
+	$url_org0 	= array('class="clm"','.clm');
+	$url_trans	= array('id="clm"','');
+	$data 		= str_replace($url_org0, $url_trans, $data);
+	// Ende Änderungen
+	
 	// Sonderfall www.schachjugend-nrw.de
 	if ($url_sj == 'www.schachjugend-nrw.de') {
 		$url_org00 = '#/ergebnisdienst/#';
@@ -204,6 +210,10 @@ if ($ext_view =="rangliste" OR $ext_view =="dwz" OR $ext_view =="runde" OR $ext_
 	$data		= preg_replace ( '#'.$url_org.'#', $url_trans, $data, -1, $anz );
 	// Alle anderen ersetzen - Suchmaschinenfreundliche URLs auf gerufener Seite: Ja und mod_rewrite Nein  (Landesseite)
 	$url_org	= '#'.JURI::base().'index.php/component/clm/\?view=#';
+	$url_trans	= JURI::base()."index.php?option=com_clm_ext&view=clm_ext&url=$urla&ext_view=";
+	$data		= preg_replace ( $url_org, $url_trans, $data, -1, $anz );
+	// Alle anderen ersetzen - Suchmaschinenfreundliche URLs auf gerufener Seite: Ja und mod_rewrite Nein  (sbrp.de)
+	$url_org	= '#'.JURI::base().'index.php/de/component/clm/\?view=#';             // und Mehrsprachigkeit mit Standard de              
 	$url_trans	= JURI::base()."index.php?option=com_clm_ext&view=clm_ext&url=$urla&ext_view=";
 	$data		= preg_replace ( $url_org, $url_trans, $data, -1, $anz );
 	// Alle anderen ersetzen - Suchmaschinenfreundliche URLs auf gerufener Seite: Ja und mod_rewrite Ja     (Dessau)
