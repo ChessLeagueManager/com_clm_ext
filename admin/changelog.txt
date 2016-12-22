@@ -11,6 +11,9 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+- - - - - 3.3.0 - [01-11-2016] - - - - - - - - - - - - - - - - - - - -
+# class idna_convert Mehrfachverwendung
+
 - - - - - 3.2.4 - [30-10-2015] - - - - - - - - - - - - - - - - - - - -
 # Bereinigung der repo-Struktur
 # Nachbesserung css-Technik

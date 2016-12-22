@@ -39,7 +39,10 @@ $url_sj		= $url;
 if (substr($url,0,1) == chr(92) ) { $url = substr($url,1,strlen($url)-1); }
 if (substr($url,strlen($url)-1,1) == chr(92) ) { $url = substr($url,0,strlen($url)-1); }
  
-include_once('idna_convert.class.php');
+// Include the class
+	if (!class_exists('idna_convert')) {
+		include_once('idna_convert.class.php');
+	}
 // Instantiate it (depending on the version you are using) with
 $IDN = new idna_convert();
 // The work string
