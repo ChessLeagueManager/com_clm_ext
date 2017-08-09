@@ -2,7 +2,7 @@
 
 /**
   * @ CLM Extern Component
- * @Copyright (C) 2008-2015 CLM Team.  All rights reserved
+ * @Copyright (C) 2008-2017 CLM Team.  All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.chessleaguemanager.de
  * @author Thomas Schwietert
@@ -176,62 +176,86 @@ else if ($ext_view =="info") {
 		$data		= preg_replace ( $url_org91, $url_trans, $data, -1, $anz );
 	}
 	
+	// Suche ersten und letzten pdf-Links
+	$first_pos_pdf = strpos ($data, 'format=pdf');
+	$last_pos_pdf = strrpos ($data, 'format=pdf');
+	if (!is_numeric($first_pos_pdf) OR $first_pos_pdf < 0) $first_pos_pdf = 0;
+	if ($first_pos_pdf > 200) $first_pos_pdf -= 200;
+	if (!is_numeric($last_pos_pdf) OR $last_pos_pdf < 0) $last_pos_pdf = 0;
+	if ($last_pos_pdf > 0) $last_pos_pdf += 10;
+	$data1 = substr($data, 0, $first_pos_pdf);
+	$data2 = substr($data, $first_pos_pdf, ($last_pos_pdf-$first_pos_pdf));
+	$data3 = substr($data, $last_pos_pdf);
 	// URL anfügen !! WICHTIG !!!
 	$url_org1 = 'href="'.$url_org.DS.'index.php';
 	$url_trans	= 'href="'.JURI::base().'index.php';
-	$data		= preg_replace ( '#'.$url_org1.'#', $url_trans, $data, -1, $anz );
-	if ($anz == 0) {
+	$data1		= preg_replace ( '#'.$url_org1.'#', $url_trans, $data1, -1, $anz1 );
+	if ($anz1 == 0) {
 	$url_org1 = $url_org.DS.'component/clm/';
 	$url_trans	= JURI::base().'component/clm/';
-	$data		= preg_replace ( '#'.$url_org1.'#', $url_trans, $data, -1, $anz );
+	$data1		= preg_replace ( '#'.$url_org1.'#', $url_trans, $data1, -1, $anz2 );
 	}
+	// URL anfügen !! WICHTIG !!! für pdf-Links
+	$url_org1 = 'href="'.$url_org.DS.'index.php';
+	$url_trans	= 'href="'.$ext_url1.DS.'index.php';
+	$data2		= preg_replace ( '#'.$url_org1.'#', $url_trans, $data2, -1, $anz3 );
+	if ($anz3 == 0) {
+	$url_org1 = $url_org.DS.'component/clm/';
+	$url_trans	= $ext_url1.DS.'component/clm/';
+	$data2		= preg_replace ( '#'.$url_org1.'#', $url_trans, $data2, -1, $anz4 );
+	}
+	// URL anfügen !! WICHTIG !!!
+	$url_org1 = 'href="'.$url_org.DS.'index.php';
+	$url_trans	= 'href="'.JURI::base().'index.php';
+	$data3		= preg_replace ( '#'.$url_org1.'#', $url_trans, $data3, -1, $anz5 );
+	if ($anz5 == 0) {
+	$url_org1 = $url_org.DS.'component/clm/';
+	$url_trans	= JURI::base().'component/clm/';
+	$data3		= preg_replace ( '#'.$url_org1.'#', $url_trans, $data3, -1, $anz6 );
+	}
+
+	$data = $data1.$data2.$data3;
+
+ 
+	// Suche letzten pdf-Links
+	$first_pos_pdf = strpos ($data, 'format=pdf');
+	$last_pos_pdf = strrpos ($data, 'format=pdf');
+	if (!is_numeric($first_pos_pdf) OR $first_pos_pdf < 0) $first_pos_pdf = 0;
+	if ($first_pos_pdf > 200) $first_pos_pdf -= 200;
+	if (!is_numeric($last_pos_pdf) OR $last_pos_pdf < 0) $last_pos_pdf = 0;
+	if ($last_pos_pdf > 0) $last_pos_pdf += 10;
+	$data1 = substr($data, 0, $first_pos_pdf);
+	$data2 = substr($data, $first_pos_pdf, ($last_pos_pdf-$first_pos_pdf));
+	$data3 = substr($data, $last_pos_pdf);
+ 
+	// Alle anderen ersetzen - Suchmaschinenfreundliche URLs auf gerufener Seite: Nein
+	$url_org	= JURI::base().'index.php\?option=com_clm&view=';
+	$url_trans	= JURI::base()."index.php?option=com_clm_ext&view=clm_ext&url=$urla&amp;ext_view=";
+	$data3		= preg_replace ( '#'.$url_org.'#', $url_trans, $data3, -1, $anz11 );
+	// Alle anderen ersetzen - Suchmaschinenfreundliche URLs auf gerufener Seite: Nein
+	$url_org	= JURI::base().'index.php?option=com_clm&view=';
+	$url_trans	= JURI::base()."index.php?option=com_clm_ext&view=clm_ext&url=$urla&ext_view=";
+	$data3		= preg_replace ( '#'.$url_org.'#', $url_trans, $data3, -1, $anz12 );
+	// Alle anderen ersetzen - Suchmaschinenfreundliche URLs auf gerufener Seite: Ja und mod_rewrite Nein  (Landesseite)
+	$url_org	= '#'.JURI::base().'index.php/component/clm/\?view=#';
+	$url_trans	= JURI::base()."index.php?option=com_clm_ext&view=clm_ext&url=$urla&ext_view=";
+	$data3		= preg_replace ( $url_org, $url_trans, $data3, -1, $anz13 );
+	// Alle anderen ersetzen - Suchmaschinenfreundliche URLs auf gerufener Seite: Ja und mod_rewrite Nein  (sbrp.de)
+	$url_org	= '#'.JURI::base().'index.php/de/component/clm/\?view=#';             // und Mehrsprachigkeit mit Standard de              
+	$url_trans	= JURI::base()."index.php?option=com_clm_ext&view=clm_ext&url=$urla&ext_view=";
+	$data3		= preg_replace ( $url_org, $url_trans, $data3, -1, $anz14 );
+	// Alle anderen ersetzen - Suchmaschinenfreundliche URLs auf gerufener Seite: Ja und mod_rewrite Ja     (Dessau)
+	$url_org	= '#'.JURI::base().'component/clm/\?view=#';
+	$url_trans	= JURI::base()."index.php?option=com_clm_ext&view=clm_ext&url=$urla&ext_view=";
+	$data3		= preg_replace ( $url_org, $url_trans, $data3, -1, $anz15 );
+ 	
+	$data = $data1.$data2.$data3;
 
     // Auswahlfelder einbeziehen
 	$url_org1 = 'value="'.$ext_url.DS.'index.php';
 	$url_trans	= 'value="'.JURI::base().'index.php';
 	$data		= preg_replace ( '#'.$url_org1.'#', $url_trans, $data, -1, $anz );
-	
-/* PDF Ausgabe nicht umsetzen!
-if ($ext_view =="rangliste" OR $ext_view =="dwz" OR $ext_view =="runde" OR $ext_view =="paarungsliste") {
-	// PDF Adresse ersetzen - Suchmaschinenfreundliche URLs auf gerufener Seite: Nein
-	$pdf_org	= '#'.JURI::base()."index.php\?option=com_clm&amp;view=$ext_view&amp;format=clm_pdf#";
-	if ($part[$count-1] !="" ){
-		$pdf_trans = "http://".$url.DS."index.php?option=com_clm&amp;view=$ext_view&amp;format=clm_pdf";
-	} else {
-		$pdf_trans = "http://".$url."index.php?option=com_clm&amp;view=$ext_view&amp;format=clm_pdf";
-	}
-	$data		= preg_replace ( $pdf_org, $pdf_trans, $data );
-	// PDF Adresse ersetzen - Suchmaschinenfreundliche URLs auf gerufener Seite: Ja
-	$pdf_org	= '#'.JURI::base()."index.php/component/clm/\?view=$ext_view&amp;format=clm_pdf#";
-	if ($part[$count-1] !="" ){
-		$pdf_trans = "http://".$url.DS."index.php?option=com_clm&amp;view=$ext_view&amp;format=clm_pdf";
-	} else {
-		$pdf_trans = "http://".$url."index.php?option=com_clm&amp;view=$ext_view&amp;format=clm_pdf";
-	}
-	$data		= preg_replace ( $pdf_org, $pdf_trans, $data );
-	}
-*/	
-	// Alle anderen ersetzen - Suchmaschinenfreundliche URLs auf gerufener Seite: Nein
-	$url_org	= JURI::base().'index.php\?option=com_clm&view=';
-	$url_trans	= JURI::base()."index.php?option=com_clm_ext&view=clm_ext&url=$urla&amp;ext_view=";
-	$data		= preg_replace ( '#'.$url_org.'#', $url_trans, $data, -1, $anz );
-	// Alle anderen ersetzen - Suchmaschinenfreundliche URLs auf gerufener Seite: Nein
-	$url_org	= JURI::base().'index.php?option=com_clm&view=';
-	$url_trans	= JURI::base()."index.php?option=com_clm_ext&view=clm_ext&url=$urla&ext_view=";
-	$data		= preg_replace ( '#'.$url_org.'#', $url_trans, $data, -1, $anz );
-	// Alle anderen ersetzen - Suchmaschinenfreundliche URLs auf gerufener Seite: Ja und mod_rewrite Nein  (Landesseite)
-	$url_org	= '#'.JURI::base().'index.php/component/clm/\?view=#';
-	$url_trans	= JURI::base()."index.php?option=com_clm_ext&view=clm_ext&url=$urla&ext_view=";
-	$data		= preg_replace ( $url_org, $url_trans, $data, -1, $anz );
-	// Alle anderen ersetzen - Suchmaschinenfreundliche URLs auf gerufener Seite: Ja und mod_rewrite Nein  (sbrp.de)
-	$url_org	= '#'.JURI::base().'index.php/de/component/clm/\?view=#';             // und Mehrsprachigkeit mit Standard de              
-	$url_trans	= JURI::base()."index.php?option=com_clm_ext&view=clm_ext&url=$urla&ext_view=";
-	$data		= preg_replace ( $url_org, $url_trans, $data, -1, $anz );
-	// Alle anderen ersetzen - Suchmaschinenfreundliche URLs auf gerufener Seite: Ja und mod_rewrite Ja     (Dessau)
-	$url_org	= '#'.JURI::base().'component/clm/\?view=#';
-	$url_trans	= JURI::base()."index.php?option=com_clm_ext&view=clm_ext&url=$urla&ext_view=";
-	$data		= preg_replace ( $url_org, $url_trans, $data, -1, $anz );
-	
+
 	// Bilderpfad ändern
 	$url_org	= '#'.$ext_url.DS.'components'.DS.'com_clm'.DS.'images#';
 	$url_trans	= JURI::base().'components'.DS.'com_clm_ext'.DS.'images';

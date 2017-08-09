@@ -2,13 +2,13 @@
 <!DOCTYPE install SYSTEM "http://dev.joomla.org/xml/1.5/component-install.dtd">
 <extension type="component" version="1.6.0" method="upgrade">
 	<name>clm_ext</name>
-	<creationDate>01.11.2016</creationDate>
+	<creationDate>18.07.2017</creationDate>
 	<author>CLM Projekt</author>
-	<copyright>(C) Copyright 2009-2016 by CLM Project</copyright>
+	<copyright>(C) Copyright 2009-2017 by CLM Project</copyright>
 	<license>GPL</license>
 	<authorEmail>fishpoke@fishpoke.de</authorEmail>
 	<authorUrl>www.chessleaguemanager.de</authorUrl>
-	<version>3.3.0</version>
+	<version>3.3.1</version>
 	<description>
 		<![CDATA[
 		 <h3>CLM Extern Komponente :</h3>
@@ -32,7 +32,7 @@
 	</files>
 
 	<administration>
-		<menu>COM_CLM_Extern</menu>
+		<menu>COM_CLM_EXTERN</menu>
 	
 	<files folder="admin">
 		<filename>clm_ext.php</filename>
@@ -42,6 +42,10 @@
 		<folder>controllers</folder>
 		<folder>views</folder>
 	</files>
+		<languages folder="admin/languages">
+			<language tag="de-DE">de-DE.com_clm_ext.sys.ini</language>
+			<language tag="en-GB">en-GB.com_clm_ext.sys.ini</language>
+		</languages>
 	</administration>
 	 
 </extension>

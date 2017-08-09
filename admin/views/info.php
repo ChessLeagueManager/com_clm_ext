@@ -2,9 +2,9 @@
 
 /**
  * @ CLM Extern Component
- * @Copyright (C) 2008 Thomas Schwietert & Andreas Dorn. All rights reserved
+ * @Copyright (C) 2008-2017 CLM Team.  All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.fishpoke.de
+ * @link http://www.chessleaguemanager.de
  * @author Thomas Schwietert
  * @email fishpoke@fishpoke.de
 */
@@ -30,7 +30,7 @@ static function display ($tpl = NULL)
 			<h2>Eine Komponente zur Darstellung von CLM Ligadaten auf Seiten ohne CLM</h2>
 			<br>von Thomas Schwietert [www.sboo.de] - thomas.schwietert@quakenbruecker-schachfreunde.de
 			<br><br>
-			<b>Projekt Homepage :  </b> http://www.fishpoke.de<br>
+			<b>Projekt Homepage :  </b> http://www.chessleaguemanager.de<br>
 			<br>
 			<h2>Einstellungen erfolgen über die Parameter des CLM Extern Moduls !</h2>
 			<h3>Das Modul kann auch mehrfach benutzt werden ! Dazu einfach im Module Manager eine Kopie anfertigen und andere Parameter wählen.</h3>
