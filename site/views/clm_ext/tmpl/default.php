@@ -82,14 +82,19 @@ if($ext_view=="" OR $saison=="" ) { ?>
 	$urla  = $urlaa.$url.$urlaa;
 	
 if ($ext_view =="rangliste" OR $ext_view =="paarungsliste" OR $ext_view =="dwz_liga" OR $ext_view =="statistik"){
-	$link 		= $ext_url.DS.'index.php?option=com_clm&view='.$ext_view.'&format=raw&html=0&saison='.$saison.'&liga='.$liga;
+	$link = $ext_url.DS.'index.php?option=com_clm&view='.$ext_view.'&format=raw&html=0&saison='.$saison.'&liga='.$liga;
 	}
 
 else if ($ext_view =="runde") {
 	$link = $ext_url.DS.'index.php?option=com_clm&view='.$ext_view.'&format=raw&html=0&saison='.$saison.'&liga='.$liga.'&runde='.$runde.'&dg='.$dg;
 	$path = "option=com_clm_ext&amp;view=clm_ext&amp;url=$urla&amp;ext_view=";
 	}
-	
+
+else if ($ext_view =="aktuell_runde") {
+	$link = $ext_url.DS.'index.php?option=com_clm&view='.$ext_view.'&format=raw&html=0&saison='.$saison.'&liga='.$liga;
+	$path = "option=com_clm_ext&amp;view=clm_ext&amp;url=$urla&amp;ext_view=";
+	}
+		
 // sekundäre Views durch Links	
 else if ($ext_view =="mannschaft") {
 	$link = $ext_url.DS.'index.php?option=com_clm&view='.$ext_view.'&format=raw&html=0&saison='.$saison.'&liga='.$liga.'&tlnr='.$tlnr;

@@ -4,7 +4,7 @@
   * Author: Fjodor Schaefer
   * www.vonfio.de
   
-  #aktuelle_runde | #check | #dwz_liga | #dwz | #info | #mannschaft | #meldeliste | #meldung | #paarungsliste | #rangliste | #runde | #spieler | #statistik | #turnier_info | #turnier_invitation | #turnier_rangliste | #turnier_paarungsliste | #turnier_player | #turnier_runde | #turnier_teilnehmer | #turnier_tabelle | #verein | #vereinsliste | #vereinsdaten
+  #aktuell_runde | #check | #dwz_liga | #dwz | #info | #mannschaft | #meldeliste | #meldung | #paarungsliste | #rangliste | #runde | #spieler | #statistik | #turnier_info | #turnier_invitation | #turnier_rangliste | #turnier_paarungsliste | #turnier_player | #turnier_runde | #turnier_teilnehmer | #turnier_tabelle | #verein | #vereinsliste | #vereinsdaten
   
   .dwz_liga | #dwz | .runde | #mannschaft | .meldung | .spielerverlauf | .spielerdwzneu | #turnier_rangliste | #turnier_tabelle |  #turnier_teilnehmer | .rangliste | .paarungsliste | .spielplan | .statistik 
   
@@ -85,7 +85,7 @@
 .clr {clear: both; }
 
 /** Navigation **/
-#clm .clmbox { margin: 10px 0 0 0; border: 1px solid #CCC; float: none !important; padding: 5px 0;} /* height: 20px;} */
+#clm .clmbox { margin: 10px 0 0 0; border: 1px solid #CCC; float: none !important; padding: 5px 0; height: 20px;}
 #clm .clmbox a { padding: 0px 10px; text-decoration: none; line-height: 20px;}
 #clm .clmbox a:hover { text-decoration: underline; }
 
@@ -197,11 +197,11 @@
 .run_titel { height: 16px; line-height: 16px; text-align:right; padding-right:1%; font-weight: bold; }
 .run_titel img { padding-left: 10px; vertical-align:middle; }
 .run_admit { float:left; padding-left:1%; }
-#runde table .paarung , #aktuelle_runde table .paarung { text-align:center; }
-#runde table .paarung2, #aktuelle_runde table .paarung2 { text-align:center; }
-#runde table td div, #aktuelle_runde table td div { } /** Hier kann eine individuelle Anpassung der Zellen vorgenommen werden **/
-#runde .legend p, #paarungsliste .legend p, #aktuelle_runde .legend p { padding: 2px 0; font-size: 90%; }
-#runde .legend img, #paarungsliste .legend img, #aktuelle_runde .legend img { vertical-align:middle; }
+#runde table .paarung , #aktuell_runde table .paarung { text-align:center; }
+#runde table .paarung2, #aktuell_runde table .paarung2 { text-align:center; }
+#runde table td div, #aktuell_runde table td div { } /** Hier kann eine individuelle Anpassung der Zellen vorgenommen werden **/
+#runde .legend p, #paarungsliste .legend p, #aktuell_runde .legend p { padding: 2px 0; font-size: 90%; }
+#runde .legend img, #paarungsliste .legend img, #aktuell_runde .legend img { vertical-align:middle; }
 
 #runde #desc {border: 1px solid #DDD; margin: 10px 0 10px 0; padding: 10px; font-size:110%;}
 #turnier_runde #desc {border: 1px solid #DDD; margin: 10px 0 10px 0; padding: 10px; font-size:110%;}

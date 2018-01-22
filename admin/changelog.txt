@@ -11,6 +11,9 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+- - - - - 3.3.2 - [xx-xx-2018] - - - - - - - - - - - - - - - - - - - -
++ View Aktuelle Runde
+
 - - - - - 3.3.1 - [16-07-2017] - - - - - - - - - - - - - - - - - - - -
 # Umsetzen pdf-Links
 ^ idna_convert Anpassung an PHP7
