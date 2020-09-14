@@ -1,7 +1,7 @@
 <?php
 /**
   * @ CLM Extern Component
- * @Copyright (C) 2008-2018 CLM Team.  All rights reserved
+ * @Copyright (C) 2008-2020 CLM Team.  All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.chessleaguemanager.de
  * @author Thomas Schwietert
@@ -126,7 +126,7 @@ $ext_url1 	= "http://".$url1;
 	$urlaa = ""; // bis 1.1.4 "'"
 	$urla  = $urlaa.$url.$urlaa;
 	
-if ($ext_view =="rangliste" OR $ext_view =="tabelle" OR $ext_view =="paarungsliste" OR $ext_view =="dwz_liga" OR $ext_view =="statistik" OR $ext_view =="teilnehmer"){
+if ($ext_view =="rangliste" OR $ext_view =="tabelle" OR $ext_view =="paarungsliste" OR $ext_view =="dwz_liga" OR $ext_view =="statistik" OR $ext_view =="teilnehmer" OR $ext_view =="liga_info"){
 	$link = $ext_url.DS.'index.php?option=com_clm&view='.$ext_view.'&format=raw&html=0&saison='.$saison.'&liga='.$liga;
 	}
 
@@ -173,6 +173,17 @@ else if ($ext_view =="info") {
 	}
 	
 	$data		= file_get_contents ($link);
+
+	// Umlenkung bei KO-System: Rangliste wird zu Paarungsliste
+	if ($ext_view =="rangliste") {
+		$pos = strpos($data, 'GO_TO_PAARUNGSLISTE');
+		if ($pos !== false) {
+			$ext_view = 'paarungsliste';
+			$link = $ext_url.DS.'index.php?option=com_clm&view='.$ext_view.'&format=raw&html=0&saison='.$saison.'&liga='.$liga;
+			
+			$data		= file_get_contents ($link);
+		}
+	}
 
 	// Umsetzen &amp; --> &   zur Vereinfachung
 	$url_org0 = '#&amp;#';
