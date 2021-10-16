@@ -11,6 +11,9 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+- - - - - 3.5.0 - [12-10-2021] - - - - - - - - - - - - - - - - - - - -
+^ Code-Anpassung Joomla 4.0
+
 - - - - - 3.4.1 - [14-09-2020] - - - - - - - - - - - - - - - - - - - -
 + View Liga_Info
 ^ Umleitung Rangliste zu Paarungsliste bei KO-Modus

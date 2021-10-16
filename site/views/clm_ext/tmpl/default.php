@@ -1,7 +1,7 @@
 <?php
 /**
-  * @ CLM Extern Component
- * @Copyright (C) 2008-2020 CLM Team.  All rights reserved
+ * @ CLM Extern Component
+ * @Copyright (C) 2008-2021 CLM Team.  All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.chessleaguemanager.de
  * @author Thomas Schwietert
@@ -16,16 +16,16 @@ function unicode_umlaute($string = '') {
 	return str_replace($search, $replace, $string);		
 }
 
-$ext_view	= JRequest::getVar('ext_view');
-$saison		= JRequest::getInt('saison');
-$liga		= JRequest::getInt('liga');
-$runde		= JRequest::getInt('runde');
-$dg		= JRequest::getInt('dg');
-$tlnr		= JRequest::getInt('tlnr');
-$zps		= JRequest::getVar('zps');
-$mglnr		= JRequest::getInt('mglnr');
-$source_id  = JRequest::getVar('source');
-$itemid		= JRequest::getVar('Itemid');
+$ext_view	= clm_ext_request_string('ext_view');
+$saison		= clm_ext_request_int('saison');
+$liga		= clm_ext_request_int('liga');
+$runde		= clm_ext_request_int('runde');
+$dg		= clm_ext_request_int('dg');
+$tlnr		= clm_ext_request_int('tlnr');
+$zps		= clm_ext_request_string('zps');
+$mglnr		= clm_ext_request_int('mglnr');
+$source_id  = clm_ext_request_string('source');
+$itemid		= clm_ext_request_string('Itemid');
 
 // URL aus Module-Parametern holen
 	$db	= JFactory::getDBO();
@@ -98,7 +98,7 @@ if (substr($url,strlen($url)-1,1) == chr(92) ) { $url = substr($url,0,strlen($ur
 $ext_url 	= "http://".$url;
 $ext_url1 	= "http://".$url1;
  
- if($ext_view=="" OR $saison=="" ) { ?>
+ if($ext_view=="" OR $saison=="" ) {  ?>
 <h1>Die Anzeigeparameter sind falsch gesetzt !</h1><h2>Kontaktieren Sie umgehend den Administrator.</h2>
 <?php } else {
 

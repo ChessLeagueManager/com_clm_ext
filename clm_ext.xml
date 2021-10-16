@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE install SYSTEM "http://dev.joomla.org/xml/1.5/component-install.dtd">
 <extension type="component" version="1.6.0" method="upgrade">
-	<name>clm_ext</name>
-	<creationDate>14.09.2020</creationDate>
+	<name>COM_CLM_EXT</name>
+	<creationDate>12.10.2021</creationDate>
 	<author>CLM Projekt</author>
-	<copyright>(C) Copyright 2009-2020 by CLM Project</copyright>
+	<copyright>(C) Copyright 2009-2021 by CLM Project</copyright>
 	<license>GPL</license>
 	<authorEmail>fishpoke@fishpoke.de</authorEmail>
 	<authorUrl>www.chessleaguemanager.de</authorUrl>
-	<version>3.4.1</version>
+	<version>3.5.0</version>
 	<description>
 		<![CDATA[
 		 <h3>CLM Extern Komponente :</h3>
@@ -21,6 +21,7 @@
 	<files folder="site">
 		<filename>clm_ext.php</filename>
 		<filename>controller.php</filename>
+		<filename>include.php</filename>
 		<filename>index.html</filename>
 		<filename>clm_content.css</filename>
 		<filename>submenu.css</filename>
