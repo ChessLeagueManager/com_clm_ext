@@ -11,6 +11,9 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+- - - - - 3.5.1 - [01-01-2022] - - - - - - - - - - - - - - - - - - - -
+^ idna_convert Anpassung php 7.4
+
 - - - - - 3.5.0 - [12-10-2021] - - - - - - - - - - - - - - - - - - - -
 ^ Code-Anpassung Joomla 4.0
 
