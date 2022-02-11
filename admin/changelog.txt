@@ -11,6 +11,9 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+- - - - - 3.6.0 - [31-01-2022] - - - - - - - - - - - - - - - - - - - -
++ Externe Daten als Menüeintragstyp verfügbar
+
 - - - - - 3.5.1 - [01-01-2022] - - - - - - - - - - - - - - - - - - - -
 ^ idna_convert Anpassung php 7.4
 

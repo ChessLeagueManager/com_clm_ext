@@ -1,7 +1,7 @@
 <?php
 /**
  * @ CLM Extern Component
- * @Copyright (C) 2008-2021 CLM Team.  All rights reserved
+ * @Copyright (C) 2008-2022 CLM Team.  All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.chessleaguemanager.de
  * @author Thomas Schwietert
@@ -27,6 +27,24 @@ $mglnr		= clm_ext_request_int('mglnr');
 $source_id  = clm_ext_request_string('source');
 $itemid		= clm_ext_request_string('Itemid');
 
+if (!is_numeric($source_id)) {	// Aufruf über Menüeintrag
+	$url = $source_id;
+//	$ext_view ='rangliste';
+
+	$keyword	= '';
+	$keyword2	= '';
+	$keyword3	= '';
+	$keyword4	= '';
+	$keyword5	= '';
+	$keyword6	= '';
+	$mcolor		= '0';
+	$mcolor2	= '0';
+	$mcolor3	= '0';
+	$mcolor4	= '0';
+	$mcolor5	= '0';
+	$mcolor6	= '0';
+
+} else { 						// Aufruf über Modul
 // URL aus Module-Parametern holen
 	$db	= JFactory::getDBO();
 	$query = "SELECT  * FROM #__modules"
@@ -43,10 +61,9 @@ $itemid		= clm_ext_request_string('Itemid');
 			$key = substr($value,1,$ipos-2);
 			$mod_data[0]->params[$key] = substr($value,$ipos+2,-1);
 		}
-	}	
+	}
+	
 	$url	= str_replace ( '\/', '/', $mod_data[0]->params["URL"]);
-	$url	= unicode_umlaute($url);
-	$url_sj		= $url;
 
 	$keyword	= unicode_umlaute($mod_data[0]->params["keyword"]);
 	$keyword2	= unicode_umlaute($mod_data[0]->params["keyword2"]);
@@ -76,6 +93,10 @@ $itemid		= clm_ext_request_string('Itemid');
 	if ($mcolor4 == '0') { $keyword4 = ''; }
 	if ($mcolor5 == '0') { $keyword5 = ''; }
 	if ($mcolor6 == '0') { $keyword6 = ''; }
+
+}
+	$url	= unicode_umlaute($url);
+	$url_sj		= $url;
 
 // delete backslashs if exist
 if (substr($url,0,1) == chr(92) ) { $url = substr($url,1,strlen($url)-1); }
