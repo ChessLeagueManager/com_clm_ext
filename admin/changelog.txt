@@ -11,6 +11,10 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+- - - - - 3.6.1 - [11-05-2022] - - - - - - - - - - - - - - - - - - - -
++ Übernahme der pgn-Partie-Links zum Nachspielen
++ Mehrsprachigkeit eingebaut
+
 - - - - - 3.6.0 - [31-01-2022] - - - - - - - - - - - - - - - - - - - -
 + Externe Daten als Menüeintragstyp verfügbar
 

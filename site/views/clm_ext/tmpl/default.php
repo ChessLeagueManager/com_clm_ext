@@ -26,9 +26,12 @@ $zps		= clm_ext_request_string('zps');
 $mglnr		= clm_ext_request_int('mglnr');
 $source_id  = clm_ext_request_string('source');
 $itemid		= clm_ext_request_string('Itemid');
+$detail		= clm_ext_request_string('detail');
+$pgn		= clm_ext_request_string('pgn');
 
 if (!is_numeric($source_id)) {	// Aufruf über Menüeintrag
 	$url = $source_id;
+	$source = $url;
 //	$ext_view ='rangliste';
 
 	$keyword	= '';
@@ -64,7 +67,8 @@ if (!is_numeric($source_id)) {	// Aufruf über Menüeintrag
 	}
 	
 	$url	= str_replace ( '\/', '/', $mod_data[0]->params["URL"]);
-
+	$source = $url;
+	
 	$keyword	= unicode_umlaute($mod_data[0]->params["keyword"]);
 	$keyword2	= unicode_umlaute($mod_data[0]->params["keyword2"]);
 	$keyword3	= unicode_umlaute($mod_data[0]->params["keyword3"]);
@@ -118,9 +122,15 @@ if (substr($url,strlen($url)-1,1) == chr(92) ) { $url = substr($url,0,strlen($ur
 
 $ext_url 	= "http://".$url;
 $ext_url1 	= "http://".$url1;
+
+//echo "<br>url:".$ext_url;
+//echo "<br>url1:".$ext_url1;
+//echo "<br>ext_view:".$ext_view;
+//echo "<br>saison:".$saison;
  
- if($ext_view=="" OR $saison=="" ) {  ?>
-<h1>Die Anzeigeparameter sind falsch gesetzt !</h1><h2>Kontaktieren Sie umgehend den Administrator.</h2>
+// if($ext_view=="" ) {  
+ if( $ext_view=="" OR $saison=="" ) {  ?>
+<h1><?php echo JText::_('PAR_ERROR01') ?></h1><h2><?php echo JText::_('PAR_ERROR02') ?></h2>
 <?php } else {
 
 	$document	= JFactory::getDocument();
@@ -128,7 +138,32 @@ $ext_url1 	= "http://".$url1;
 	$document->addStyleSheet( $cssDir.DS.'clm_content.css', 'text/css', null, array() );
 	$document->addStyleSheet( $cssDir.DS.'submenu.css', 'text/css', null, array() );
 	$document->addScript( $cssDir.DS.'submenu.js');
- 
+
+ 	$document->addScript( $cssDir.'jsPgnViewer.js');
+	$document->addScript( $cssDir.'showPgnViewer.js');
+
+	// Zufallszahl
+	$now = time()+mt_rand();
+	$document->addScriptDeclaration("var randomid = $now;");
+	// pgn-params (Standardwerte der Hauptkomponente - hier keine Parameter
+	$document->addScriptDeclaration("var param = new Array();");
+	$document->addScriptDeclaration("param['fe_pgn_moveFont'] = '666666';");
+	$document->addScriptDeclaration("param['fe_pgn_commentFont'] = '888888';");
+	$document->addScriptDeclaration("param['fe_pgn_style'] = 'png';");
+	// Tooltip-Texte
+	$document->addScriptDeclaration("var text = new Array();");
+	$document->addScriptDeclaration("text['altRewind'] = '".JText::_('PGN_ALT_REWIND')."';");
+	$document->addScriptDeclaration("text['altBack'] = '".JText::_('PGN_ALT_BACK')."'");
+	$document->addScriptDeclaration("text['altFlip'] = '".JText::_('PGN_ALT_FLIP')."';");
+	$document->addScriptDeclaration("text['altShowMoves'] = '".JText::_('PGN_ALT_SHOWMOVES')."';");
+	$document->addScriptDeclaration("text['altComments'] = '".JText::_('PGN_ALT_COMMENTS')."';");
+	$document->addScriptDeclaration("text['altPlayMove'] = '".JText::_('PGN_ALT_PLAYMOVE')."';");
+	$document->addScriptDeclaration("text['altFastForward'] = '".JText::_('PGN_ALT_FASTFORWARD')."';");
+	$document->addScriptDeclaration("text['pgnClose'] = '".JText::_('PGN_CLOSE')."';");
+	// Pfad
+	$document->addScriptDeclaration("var imagepath = '".JURI::base()."components/com_clm_ext/images/pgnviewer/'");
+
+
 /////////////////////
 // Aufrufen mit z.B.:
 // http://localhost/install/index.php?option=com_clm_ext&view=clm_ext&ext_view=rangliste&saison=1&liga=1
@@ -149,10 +184,12 @@ $ext_url1 	= "http://".$url1;
 	
 if ($ext_view =="rangliste" OR $ext_view =="tabelle" OR $ext_view =="paarungsliste" OR $ext_view =="dwz_liga" OR $ext_view =="statistik" OR $ext_view =="teilnehmer" OR $ext_view =="liga_info"){
 	$link = $ext_url.DS.'index.php?option=com_clm&view='.$ext_view.'&format=raw&html=0&saison='.$saison.'&liga='.$liga;
+//	if ($ext_view =="rangliste" AND $pgn == '1') $link .= '&pgn=1';
 	}
 
 else if ($ext_view =="runde") {
 	$link = $ext_url.DS.'index.php?option=com_clm&view='.$ext_view.'&format=raw&html=0&saison='.$saison.'&liga='.$liga.'&runde='.$runde.'&dg='.$dg;
+	if ($detail == '1') $link .= '&detail=1';
 	$path = "option=com_clm_ext&amp;view=clm_ext&amp;url=$urla&amp;ext_view=";
 	}
 
@@ -192,9 +229,43 @@ else if ($ext_view =="info") {
 	$link = $ext_url.DS.'index.php?option=com_clm&view='.$ext_view.'&format=raw&html=0&saison='.$saison;
 	$path = "option=com_clm_ext&amp;view=clm_ext&amp;url=$urla&amp;ext_view=";
 	}
-	
-	$data		= file_get_contents ($link);
 
+$ctx = stream_context_create(array('http'=> array( 'timeout' => 10 ) ));
+$msg = '';
+if (($data = @file_get_contents($link,false,$ctx)) === false) {
+    $error_http = error_get_last();
+    $msg = "HTTP request failed. Error was: " . $error_http['message'];
+	$link = str_replace('http','https',$link);
+	if (($data = @file_get_contents($link,false,$ctx)) === false) {
+      $error_https = error_get_last();
+      $msg = "HTTPS request failed. Error was: " . $error_https['message'];
+	}
+}
+if ($msg != '') {
+	echo '<br>'.$msg;
+	$db	= JFactory::getDBO();
+	$query = 'SELECT * FROM #__clm_logging LIMIT 1';
+	$db->setQuery($query);
+	$log_data = $db->loadObjectList();
+// Log
+	if (isset($log_data[0])) {  
+		$aktion = "Extern Fehler";
+		$callid = uniqid ( "", false );
+		$userid = -1;
+		$parray = array('source_id' => $source_id, 'sid' => $saison, 'liga' => $liga, 'msg' => $msg);
+		$query	= "INSERT INTO #__clm_logging "
+			." ( `callid`, `userid`, `timestamp` , `type` ,`name`, `content`) "
+			." VALUES ('".$callid."','".$userid."',".time().",5,'".$aktion."','".json_encode($parray)."') "
+			;
+		$db->setQuery($query);
+		$db->execute();
+	}
+}
+	
+/*	$data		= file_get_contents ($link);
+if (is_string($data)) echo "<br>String: ".strlen($data);
+else { echo "<br>kein String: "; var_dump($data); }
+*/
 	// Umlenkung bei KO-System: Rangliste wird zu Paarungsliste
 	if ($ext_view =="rangliste") {
 		$pos = strpos($data, 'GO_TO_PAARUNGSLISTE');
@@ -256,6 +327,16 @@ else if ($ext_view =="info") {
 		$url_org91 = '#.html"#';
 		$url_trans	= $replace_html;  //'&Itemid=101"';
 		$data		= preg_replace ( $url_org91, $url_trans, $data, -1, $anz );
+	}
+
+	// pgn-Icon ausblenden
+	if ($ext_view =="rangliste") {
+		$pos_pgn = strpos($data, 'pgn.gif"');
+		if ($pos_pgn > 1) {
+//			echo "<br>pos_pgn:"; var_dump($pos_pgn);
+			$data		= preg_replace ( '#pgn.gif"#', 'pgn.gif" style="display:none;"', $data, -1, $anz );
+//			echo "<br>anz:"; var_dump($anz);
+		}
 	}
 	
 	// Suche ersten und letzten pdf-Links
@@ -529,6 +610,6 @@ echo $data;
 <br>
 
 <hr>
-Die hier dargestellten Ligen werden extern angezeigt und befinden sich im Orginal auf <a href="<?php echo $ext_url;?>"><?php echo $ext_url1;?></a>
+<?php echo JText::_('END_NOTICE') ?><a href="<?php echo $ext_url;?>"><?php echo $ext_url1;?></a>
 <?php } ?>
  

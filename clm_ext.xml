@@ -2,13 +2,13 @@
 <!DOCTYPE install SYSTEM "http://dev.joomla.org/xml/1.5/component-install.dtd">
 <extension type="component" version="1.6.0" method="upgrade">
 	<name>COM_CLM_EXT</name>
-	<creationDate>31.01.2022</creationDate>
+	<creationDate>11.05.2022</creationDate>
 	<author>CLM Projekt</author>
 	<copyright>(C) Copyright 2009-2022 by CLM Project</copyright>
 	<license>GPL</license>
 	<authorEmail>fishpoke@fishpoke.de</authorEmail>
 	<authorUrl>www.chessleaguemanager.de</authorUrl>
-	<version>3.6.0</version>
+	<version>3.6.1</version>
 	<description>
 		<![CDATA[
 		 <h3>CLM Extern Komponente :</h3>
@@ -26,11 +26,16 @@
 		<filename>clm_content.css</filename>
 		<filename>submenu.css</filename>
 		<filename>submenu.js</filename>
+		<filename>jsPgnViewer.js</filename>
+		<filename>showPgnViewer.js</filename>
 		<folder>images</folder>
 		<folder>models</folder>
 		<folder>views</folder>
-
 	</files>
+	<languages folder="site/languages">
+		<language tag="en-GB">en-GB.com_clm_ext.ini</language>
+		<language tag="de-DE">de-DE.com_clm_ext.ini</language>
+	</languages>
 
 	<administration>
 		<menu>COM_CLM_EXTERN</menu>
