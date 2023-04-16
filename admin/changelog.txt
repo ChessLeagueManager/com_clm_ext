@@ -11,6 +11,9 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+- - - - - 4.0.0 - [06-03-2022] - - - - - - - - - - - - - - - - - - - -
++ Übernahme des View 'Aktuelle Runde'
+
 - - - - - 3.6.1 - [11-05-2022] - - - - - - - - - - - - - - - - - - - -
 + Übernahme der pgn-Partie-Links zum Nachspielen
 + Mehrsprachigkeit eingebaut

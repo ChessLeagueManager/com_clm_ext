@@ -1,13 +1,12 @@
 <?php
 /**
  * @ CLM Extern Component
- * @Copyright (C) 2008-2022 CLM Team.  All rights reserved
+ * @Copyright (C) 2008-2023 CLM Team.  All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.chessleaguemanager.de
  * @author Thomas Schwietert
  * @email fishpoke@fishpoke.de
 */
-
 defined('_JEXEC') or die('Restricted access');
 
 function unicode_umlaute($string = '') {
@@ -194,7 +193,47 @@ else if ($ext_view =="runde") {
 	}
 
 else if ($ext_view =="aktuell_runde") {
-	$link = $ext_url.DS.'index.php?option=com_clm&view='.$ext_view.'&format=raw&html=0&saison='.$saison.'&liga='.$liga;
+	$url = $ext_url.'/components/com_clm/clm/xml_round.php';
+	$url .='?lid=' . $liga;
+//echo "<br>zrl $url ";
+
+	if (!$html = file_get_contents($url)) {
+		$url0 = $source.'/';
+		if ($this->url_exists ( $url0 ) )
+			echo "<br>".JText::_("PLG_CLM_SHOW_ERR_VERSION");
+		else
+			echo "<br>".JText::_("PLG_CLM_SHOW_ERR_CONNECTION");
+	}
+	if (!$xml = new SimpleXMLElement($html)) {
+		foreach (libxml_get_errors() as $error) {
+			echo "<br>errror:"; var_dump($error);
+		}
+		libxml_clear_errors();
+	}
+	if (isset($xml->error)) {
+//			$error_text = 'PLG_CLM_SHOW_ERR_NO_TOURNAMENT';
+			echo "<br>".JText::_($xml->error);
+	}
+// Aufbereitung der Ergebnisse
+		if (isset($xml->lid) AND $xml->lid != "") {
+			$lid = htmlentities($xml->lid);
+		} else {
+			$lid = "";
+		}
+		if (isset($xml->runde) AND $xml->runde != "") {
+			$runde = htmlentities($xml->runde);
+		} else {
+			$runde = "";
+		}
+		if (isset($xml->dg) AND $xml->dg != "") {
+			$dg = htmlentities($xml->dg);
+		} else {
+			$dg = "";
+		}
+//echo "<br>lid $lid  runde $runde  dg $dg ";
+	$ext_view = "runde";
+//die();	
+	$link = $ext_url.DS.'index.php?option=com_clm&view='.$ext_view.'&format=raw&html=0&saison='.$saison.'&liga='.$liga.'&runde='.$runde.'&dg='.$dg;
 	$path = "option=com_clm_ext&amp;view=clm_ext&amp;url=$urla&amp;ext_view=";
 	}
 		
