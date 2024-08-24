@@ -2,7 +2,7 @@
 <!DOCTYPE install SYSTEM "http://dev.joomla.org/xml/1.5/component-install.dtd">
 <extension type="component" version="1.6.0" method="upgrade">
 	<name>COM_CLM_EXT</name>
-	<creationDate>08.03.2023</creationDate>
+	<creationDate>02.07.2024</creationDate>
 	<author>CLM Projekt</author>
 	<copyright>(C) Copyright 2009-2023 by CLM Project</copyright>
 	<license>GPL</license>
