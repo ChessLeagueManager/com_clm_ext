@@ -1,7 +1,7 @@
 <?php
 /**
  * @ CLM Extern Component
- * @Copyright (C) 2008-2023 CLM Team.  All rights reserved
+ * @Copyright (C) 2008-2024 CLM Team.  All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.chessleaguemanager.de
  * @author Thomas Schwietert
@@ -133,6 +133,15 @@ $ext_url1 	= "http://".$url1;
 <?php } else {
 
 	$document	= JFactory::getDocument();
+
+		if (isset($_SERVER['HTTPS']) AND $_SERVER['HTTPS'] != 'off') {
+			$prot = 'https';
+		} else {
+			$prot = 'http';
+		}
+	$document->addScript($prot.'://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/build/ol.js');
+	$document->addStyleSheet($prot.'://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/css/ol.css');
+
 	$cssDir		= JURI::base().'components'.DS.'com_clm_ext'.DS;
 	$document->addStyleSheet( $cssDir.DS.'clm_content.css', 'text/css', null, array() );
 	$document->addStyleSheet( $cssDir.DS.'submenu.css', 'text/css', null, array() );
@@ -640,6 +649,30 @@ else { echo "<br>kein String: "; var_dump($data); }
 				$pstart = $sende + strlen($span11) + strlen($span12) + strlen($mcolor6) + strlen($span2) ;
 			}
 		}
+	}
+
+	// MapMarker anpassen
+	$treffer = strpos ( $data, 'marker-icon.png', 0 );
+	if ($treffer !== false AND $treffer > 0) {
+		// find start und ende der URL
+		$markerlink_ext = JURI::base().'components'.DS.'com_clm_ext'.DS.'images'.DS.'marker-icon.png';
+	    $istart = 0;
+		$iend = 0;
+	    while ($istart < 150 AND ($treffer - $istart) > 0) {
+			$istart++;
+			if (substr($data, ($treffer - $istart), 1) == "`") {
+				$istart = $treffer - $istart + 1;
+				break;
+			}
+		}
+	    while ($iend < 150 AND ($treffer + $iend) < strlen($data)) {
+			$iend++;
+			if (substr($data, ($treffer + $iend), 1) == "`") {
+				$iend = $treffer + $iend;
+				break;
+			}
+		}
+		$data = substr($data,0,$istart).$markerlink_ext.substr($data,$iend,strlen($data)-$iend);
 	}
 
 // Daten anzeigen
