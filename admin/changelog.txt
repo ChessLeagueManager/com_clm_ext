@@ -11,6 +11,10 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+- - - - - 4.2.0 - [15-08-2025] - - - - - - - - - - - - - - - - - - - -
+# View Runde mit Marker Spielbericht
+^ Anpassung Joomla 5.x
+
 - - - - - 4.1.0 - [11-09-2024] - - - - - - - - - - - - - - - - - - - -
 + Anpassung Geo-Funktion uber Koordinaten
 

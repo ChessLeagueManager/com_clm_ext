@@ -1,7 +1,7 @@
 <?php
 /**
  * @ CLM Extern Component
- * @Copyright (C) 2008-2024 CLM Team.  All rights reserved
+ * @Copyright (C) 2008-2025 CLM Team.  All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.chessleaguemanager.de
  * @author Thomas Schwietert
@@ -390,6 +390,7 @@ else { echo "<br>kein String: "; var_dump($data); }
 	// Suche ersten und letzten pdf-Links
 	$first_pos_pdf = strpos ($data, 'format=pdf');
 	$last_pos_pdf = strrpos ($data, 'format=pdf');
+	if ($ext_view == 'runde') $last_pos_pdf = $first_pos_pdf + 50; // sonderfall;
 	if (!is_numeric($first_pos_pdf) OR $first_pos_pdf < 0) $first_pos_pdf = 0;
 	if ($first_pos_pdf > 200) $first_pos_pdf -= 200;
 	if (!is_numeric($last_pos_pdf) OR $last_pos_pdf < 0) $last_pos_pdf = 0;
@@ -431,6 +432,7 @@ else { echo "<br>kein String: "; var_dump($data); }
 	// Suche letzten pdf-Links
 	$first_pos_pdf = strpos ($data, 'format=pdf');
 	$last_pos_pdf = strrpos ($data, 'format=pdf');
+	if ($ext_view == 'runde') $last_pos_pdf = $first_pos_pdf + 50; // sonderfall;
 	if (!is_numeric($first_pos_pdf) OR $first_pos_pdf < 0) $first_pos_pdf = 0;
 	if ($first_pos_pdf > 200) $first_pos_pdf -= 200;
 	if (!is_numeric($last_pos_pdf) OR $last_pos_pdf < 0) $last_pos_pdf = 0;
@@ -451,6 +453,11 @@ else { echo "<br>kein String: "; var_dump($data); }
 	$url_org	= '#'.JURI::base().'index.php/component/clm/\?view=#';
 	$url_trans	= JURI::base()."index.php?option=com_clm_ext&view=clm_ext&source=$source_id&ext_view=";
 	$data1		= preg_replace ( $url_org, $url_trans, $data1, -1, $anz13 );
+	if ($anz13 == 0) {
+		$url_org	= '#'.JURI::base().'index.php/component/clm\?view=#';
+		$url_trans	= JURI::base()."index.php?option=com_clm_ext&view=clm_ext&source=$source_id&ext_view=";
+		$data1		= preg_replace ( $url_org, $url_trans, $data1, -1, $anz13a );
+	}
 	// Alle anderen ersetzen - Suchmaschinenfreundliche URLs auf gerufener Seite: Ja und mod_rewrite Nein  (sbrp.de)
 	$url_org	= '#'.JURI::base().'index.php/de/component/clm/\?view=#';             // und Mehrsprachigkeit mit Standard de              
 	$url_trans	= JURI::base()."index.php?option=com_clm_ext&view=clm_ext&source=$source_id&ext_view=";
@@ -473,6 +480,11 @@ else { echo "<br>kein String: "; var_dump($data); }
 	$url_org	= '#'.JURI::base().'index.php/component/clm/\?view=#';
 	$url_trans	= JURI::base()."index.php?option=com_clm_ext&view=clm_ext&source=$source_id&ext_view=";
 	$data3		= preg_replace ( $url_org, $url_trans, $data3, -1, $anz13 );
+	if ($anz13 == 0) {
+		$url_org	= '#'.JURI::base().'index.php/component/clm\?view=#';
+		$url_trans	= JURI::base()."index.php?option=com_clm_ext&view=clm_ext&source=$source_id&ext_view=";
+		$data3		= preg_replace ( $url_org, $url_trans, $data3, -1, $anz13a );
+	}
 	// Alle anderen ersetzen - Suchmaschinenfreundliche URLs auf gerufener Seite: Ja und mod_rewrite Nein  (sbrp.de)
 	$url_org	= '#'.JURI::base().'index.php/de/component/clm/\?view=#';             // und Mehrsprachigkeit mit Standard de              
 	$url_trans	= JURI::base()."index.php?option=com_clm_ext&view=clm_ext&source=$source_id&ext_view=";
