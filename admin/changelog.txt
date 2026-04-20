@@ -11,6 +11,9 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+- - - - - 5.0.0 - [11-04-2026] - - - - - - - - - - - - - - - - - - - -
+^ Anpassung Joomla 6
+
 - - - - - 4.2.0 - [15-08-2025] - - - - - - - - - - - - - - - - - - - -
 # View Runde mit Marker Spielbericht
 ^ Anpassung Joomla 5.x

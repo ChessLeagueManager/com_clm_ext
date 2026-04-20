@@ -11,6 +11,10 @@
 defined('_JEXEC') or die('Restricted access');
 if(!defined("DS")){define('DS', DIRECTORY_SEPARATOR);} // fix for Joomla 3.2
 
+JLoader::registerAlias('JModelLegacy', '\\Joomla\\CMS\\MVC\\Model\\BaseDatabaseModel', '6.0');
+JLoader::registerAlias('JControllerLegacy', '\\Joomla\\CMS\\MVC\\Controller\\BaseController', '6.0');
+JLoader::registerAlias('JViewLegacy', '\\Joomla\\CMS\\MVC\\View\\HtmlView', '6.0');
+
 // laden des Joomla! Basis Controllers
 require_once (JPATH_COMPONENT.DS.'controller.php');
 require_once (JPATH_SITE . DIRECTORY_SEPARATOR . "components" . DIRECTORY_SEPARATOR . "com_clm_ext" . DIRECTORY_SEPARATOR . "include.php");

@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="component" version="2.5.0" method="upgrade">
+<extension type="component" version="4.0.0" method="upgrade">
 	<name>COM_CLM_EXT</name>
-	<creationDate>15.08.2025</creationDate>
+	<creationDate>11.04.2026</creationDate>
 	<author>CLM Projekt</author>
-	<copyright>(C) Copyright 2009-2025 by CLM Project</copyright>
+	<copyright>(C) Copyright 2009-2026 by CLM Project</copyright>
 	<license>GPL</license>
 	<authorEmail>fishpoke@fishpoke.de</authorEmail>
 	<authorUrl>www.chessleaguemanager.de</authorUrl>
-	<version>4.2.0</version>
+	<version>5.0.0</version>
 	<description>
 		<![CDATA[
 		 <h3>CLM Extern Komponente :</h3>
 		 <p>Die Komponente erlaubt die Darstellung von Daten aus dem Ligamanager CLM auf einer Seite ohne CLM !</p>
-		 <p><a target="_blank" href="http://www.chessleaguemanager.de">Projekt Homepage</a></p>
+		 <p><a target="_blank" href="https://joomla.chessleaguemanager.org">Projekt Homepage</a></p>
 		 <p>&copy; Thomas Schwietert [<a target="_blank" href="http://www.sboo.de">www.sboo.de</a>]</p>
 			 ]]>
 	</description>

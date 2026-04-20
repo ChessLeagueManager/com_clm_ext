@@ -1,13 +1,17 @@
 <?php
 /**
  * @ CLM Extern Component
- * @Copyright (C) 2008-2025 CLM Team.  All rights reserved
+ * @Copyright (C) 2008-2026 CLM Team.  All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.chessleaguemanager.de
+ * @link https://chessleaguemanager.org
  * @author Thomas Schwietert
  * @email fishpoke@fishpoke.de
 */
 defined('_JEXEC') or die('Restricted access');
+
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
 
 function unicode_umlaute($string = '') {
 	$search = array("\u00c4", "\u00d6", "\u00dc", "\u00e4", "\u00f6", "\u00fc", "\00df", "\00e9");
@@ -48,7 +52,7 @@ if (!is_numeric($source_id)) {	// Aufruf über Menüeintrag
 
 } else { 						// Aufruf über Modul
 // URL aus Module-Parametern holen
-	$db	= JFactory::getDBO();
+	$db	= Factory::getDBO();
 	$query = "SELECT  * FROM #__modules"
 		." WHERE id = ".$source_id;
 	$db->setQuery( $query );
@@ -129,10 +133,10 @@ $ext_url1 	= "http://".$url1;
  
 // if($ext_view=="" ) {  
  if( $ext_view=="" OR $saison=="" ) {  ?>
-<h1><?php echo JText::_('PAR_ERROR01') ?></h1><h2><?php echo JText::_('PAR_ERROR02') ?></h2>
+<h1><?php echo Text::_('PAR_ERROR01') ?></h1><h2><?php echo Text::_('PAR_ERROR02') ?></h2>
 <?php } else {
 
-	$document	= JFactory::getDocument();
+	$document	= Factory::getDocument();
 
 		if (isset($_SERVER['HTTPS']) AND $_SERVER['HTTPS'] != 'off') {
 			$prot = 'https';
@@ -142,7 +146,7 @@ $ext_url1 	= "http://".$url1;
 	$document->addScript($prot.'://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/build/ol.js');
 	$document->addStyleSheet($prot.'://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/css/ol.css');
 
-	$cssDir		= JURI::base().'components'.DS.'com_clm_ext'.DS;
+	$cssDir		= URI::base().'components'.DS.'com_clm_ext'.DS;
 	$document->addStyleSheet( $cssDir.DS.'clm_content.css', 'text/css', null, array() );
 	$document->addStyleSheet( $cssDir.DS.'submenu.css', 'text/css', null, array() );
 	$document->addScript( $cssDir.DS.'submenu.js');
@@ -160,16 +164,16 @@ $ext_url1 	= "http://".$url1;
 	$document->addScriptDeclaration("param['fe_pgn_style'] = 'png';");
 	// Tooltip-Texte
 	$document->addScriptDeclaration("var text = new Array();");
-	$document->addScriptDeclaration("text['altRewind'] = '".JText::_('PGN_ALT_REWIND')."';");
-	$document->addScriptDeclaration("text['altBack'] = '".JText::_('PGN_ALT_BACK')."'");
-	$document->addScriptDeclaration("text['altFlip'] = '".JText::_('PGN_ALT_FLIP')."';");
-	$document->addScriptDeclaration("text['altShowMoves'] = '".JText::_('PGN_ALT_SHOWMOVES')."';");
-	$document->addScriptDeclaration("text['altComments'] = '".JText::_('PGN_ALT_COMMENTS')."';");
-	$document->addScriptDeclaration("text['altPlayMove'] = '".JText::_('PGN_ALT_PLAYMOVE')."';");
-	$document->addScriptDeclaration("text['altFastForward'] = '".JText::_('PGN_ALT_FASTFORWARD')."';");
-	$document->addScriptDeclaration("text['pgnClose'] = '".JText::_('PGN_CLOSE')."';");
+	$document->addScriptDeclaration("text['altRewind'] = '".Text::_('PGN_ALT_REWIND')."';");
+	$document->addScriptDeclaration("text['altBack'] = '".Text::_('PGN_ALT_BACK')."'");
+	$document->addScriptDeclaration("text['altFlip'] = '".Text::_('PGN_ALT_FLIP')."';");
+	$document->addScriptDeclaration("text['altShowMoves'] = '".Text::_('PGN_ALT_SHOWMOVES')."';");
+	$document->addScriptDeclaration("text['altComments'] = '".Text::_('PGN_ALT_COMMENTS')."';");
+	$document->addScriptDeclaration("text['altPlayMove'] = '".Text::_('PGN_ALT_PLAYMOVE')."';");
+	$document->addScriptDeclaration("text['altFastForward'] = '".Text::_('PGN_ALT_FASTFORWARD')."';");
+	$document->addScriptDeclaration("text['pgnClose'] = '".Text::_('PGN_CLOSE')."';");
 	// Pfad
-	$document->addScriptDeclaration("var imagepath = '".JURI::base()."components/com_clm_ext/images/pgnviewer/'");
+	$document->addScriptDeclaration("var imagepath = '".URI::base()."components/com_clm_ext/images/pgnviewer/'");
 
 
 /////////////////////
@@ -209,9 +213,9 @@ else if ($ext_view =="aktuell_runde") {
 	if (!$html = file_get_contents($url)) {
 		$url0 = $source.'/';
 		if ($this->url_exists ( $url0 ) )
-			echo "<br>".JText::_("PLG_CLM_SHOW_ERR_VERSION");
+			echo "<br>".Text::_("PLG_CLM_SHOW_ERR_VERSION");
 		else
-			echo "<br>".JText::_("PLG_CLM_SHOW_ERR_CONNECTION");
+			echo "<br>".Text::_("PLG_CLM_SHOW_ERR_CONNECTION");
 	}
 	if (!$xml = new SimpleXMLElement($html)) {
 		foreach (libxml_get_errors() as $error) {
@@ -221,7 +225,7 @@ else if ($ext_view =="aktuell_runde") {
 	}
 	if (isset($xml->error)) {
 //			$error_text = 'PLG_CLM_SHOW_ERR_NO_TOURNAMENT';
-			echo "<br>".JText::_($xml->error);
+			echo "<br>".Text::_($xml->error);
 	}
 // Aufbereitung der Ergebnisse
 		if (isset($xml->lid) AND $xml->lid != "") {
@@ -291,7 +295,7 @@ if (($data = @file_get_contents($link,false,$ctx)) === false) {
 }
 if ($msg != '') {
 	echo '<br>'.$msg;
-	$db	= JFactory::getDBO();
+	$db	= Factory::getDBO();
 	$query = 'SELECT * FROM #__clm_logging LIMIT 1';
 	$db->setQuery($query);
 	$log_data = $db->loadObjectList();
@@ -401,11 +405,11 @@ else { echo "<br>kein String: "; var_dump($data); }
 
 	// URL anfügen !! WICHTIG !!!
 	$url_org1 = 'href="'.$url_org.DS.'index.php';
-	$url_trans	= 'href="'.JURI::base().'index.php';
+	$url_trans	= 'href="'.URI::base().'index.php';
 	$data1		= preg_replace ( '#'.$url_org1.'#', $url_trans, $data1, -1, $anz1 );
 	if ($anz1 == 0) {
 	$url_org1 = $url_org.DS.'component/clm/';
-	$url_trans	= JURI::base().'component/clm/';
+	$url_trans	= URI::base().'component/clm/';
 	$data1		= preg_replace ( '#'.$url_org1.'#', $url_trans, $data1, -1, $anz2 );
 	}
 	// URL anfügen !! WICHTIG !!! für pdf-Links
@@ -419,11 +423,11 @@ else { echo "<br>kein String: "; var_dump($data); }
 	}
 	// URL anfügen !! WICHTIG !!!
 	$url_org1 = 'href="'.$url_org.DS.'index.php';
-	$url_trans	= 'href="'.JURI::base().'index.php';
+	$url_trans	= 'href="'.URI::base().'index.php';
 	$data3		= preg_replace ( '#'.$url_org1.'#', $url_trans, $data3, -1, $anz5 );
 	if ($anz5 == 0) {
 	$url_org1 = $url_org.DS.'component/clm/';
-	$url_trans	= JURI::base().'component/clm/';
+	$url_trans	= URI::base().'component/clm/';
 	$data3		= preg_replace ( '#'.$url_org1.'#', $url_trans, $data3, -1, $anz6 );
 	}
 
@@ -442,63 +446,63 @@ else { echo "<br>kein String: "; var_dump($data); }
 	$data3 = substr($data, $last_pos_pdf);
  
 	// Alle anderen ersetzen - Suchmaschinenfreundliche URLs auf gerufener Seite: Nein
-	$url_org	= JURI::base().'index.php\?option=com_clm&view=';
-	$url_trans	= JURI::base()."index.php?option=com_clm_ext&view=clm_ext&source=$source_id&amp;ext_view=";
+	$url_org	= URI::base().'index.php\?option=com_clm&view=';
+	$url_trans	= URI::base()."index.php?option=com_clm_ext&view=clm_ext&source=$source_id&amp;ext_view=";
 	$data1		= preg_replace ( '#'.$url_org.'#', $url_trans, $data1, -1, $anz11 );
 	// Alle anderen ersetzen - Suchmaschinenfreundliche URLs auf gerufener Seite: Nein
-	$url_org	= JURI::base().'index.php?option=com_clm&view=';
-	$url_trans	= JURI::base()."index.php?option=com_clm_ext&view=clm_ext&source=$source_id&ext_view=";
+	$url_org	= URI::base().'index.php?option=com_clm&view=';
+	$url_trans	= URI::base()."index.php?option=com_clm_ext&view=clm_ext&source=$source_id&ext_view=";
 	$data1		= preg_replace ( '#'.$url_org.'#', $url_trans, $data1, -1, $anz12 );
 	// Alle anderen ersetzen - Suchmaschinenfreundliche URLs auf gerufener Seite: Ja und mod_rewrite Nein  (Landesseite)
-	$url_org	= '#'.JURI::base().'index.php/component/clm/\?view=#';
-	$url_trans	= JURI::base()."index.php?option=com_clm_ext&view=clm_ext&source=$source_id&ext_view=";
+	$url_org	= '#'.URI::base().'index.php/component/clm/\?view=#';
+	$url_trans	= URI::base()."index.php?option=com_clm_ext&view=clm_ext&source=$source_id&ext_view=";
 	$data1		= preg_replace ( $url_org, $url_trans, $data1, -1, $anz13 );
 	if ($anz13 == 0) {
-		$url_org	= '#'.JURI::base().'index.php/component/clm\?view=#';
-		$url_trans	= JURI::base()."index.php?option=com_clm_ext&view=clm_ext&source=$source_id&ext_view=";
+		$url_org	= '#'.URI::base().'index.php/component/clm\?view=#';
+		$url_trans	= URI::base()."index.php?option=com_clm_ext&view=clm_ext&source=$source_id&ext_view=";
 		$data1		= preg_replace ( $url_org, $url_trans, $data1, -1, $anz13a );
 	}
 	// Alle anderen ersetzen - Suchmaschinenfreundliche URLs auf gerufener Seite: Ja und mod_rewrite Nein  (sbrp.de)
-	$url_org	= '#'.JURI::base().'index.php/de/component/clm/\?view=#';             // und Mehrsprachigkeit mit Standard de              
-	$url_trans	= JURI::base()."index.php?option=com_clm_ext&view=clm_ext&source=$source_id&ext_view=";
+	$url_org	= '#'.URI::base().'index.php/de/component/clm/\?view=#';             // und Mehrsprachigkeit mit Standard de              
+	$url_trans	= URI::base()."index.php?option=com_clm_ext&view=clm_ext&source=$source_id&ext_view=";
 	$data1		= preg_replace ( $url_org, $url_trans, $data1, -1, $anz14 );
 	// Alle anderen ersetzen - Suchmaschinenfreundliche URLs auf gerufener Seite: Ja und mod_rewrite Ja     (Dessau)
-	$url_org	= '#'.JURI::base().'component/clm/\?view=#';
-	$url_trans	= JURI::base()."index.php?option=com_clm_ext&view=clm_ext&source=$source_id&ext_view=";
+	$url_org	= '#'.URI::base().'component/clm/\?view=#';
+	$url_trans	= URI::base()."index.php?option=com_clm_ext&view=clm_ext&source=$source_id&ext_view=";
 	$data1		= preg_replace ( $url_org, $url_trans, $data1, -1, $anz15 );
 
 	// Alle anderen ersetzen - Suchmaschinenfreundliche URLs auf gerufener Seite: Nein
-	$url_org	= JURI::base().'index.php\?option=com_clm&view=';
-	//$url_trans	= JURI::base()."index.php?option=com_clm_ext&view=clm_ext&url=$urla&amp;ext_view=";
-	$url_trans	= JURI::base()."index.php?option=com_clm_ext&view=clm_ext&source=$source_id&amp;ext_view=";
+	$url_org	= URI::base().'index.php\?option=com_clm&view=';
+	//$url_trans	= URI::base()."index.php?option=com_clm_ext&view=clm_ext&url=$urla&amp;ext_view=";
+	$url_trans	= URI::base()."index.php?option=com_clm_ext&view=clm_ext&source=$source_id&amp;ext_view=";
 	$data3		= preg_replace ( '#'.$url_org.'#', $url_trans, $data3, -1, $anz11 );
 	// Alle anderen ersetzen - Suchmaschinenfreundliche URLs auf gerufener Seite: Nein
-	$url_org	= JURI::base().'index.php?option=com_clm&view=';
-	$url_trans	= JURI::base()."index.php?option=com_clm_ext&view=clm_ext&source=$source_id&ext_view=";
+	$url_org	= URI::base().'index.php?option=com_clm&view=';
+	$url_trans	= URI::base()."index.php?option=com_clm_ext&view=clm_ext&source=$source_id&ext_view=";
 	$data3		= preg_replace ( '#'.$url_org.'#', $url_trans, $data3, -1, $anz12 );
 	// Alle anderen ersetzen - Suchmaschinenfreundliche URLs auf gerufener Seite: Ja und mod_rewrite Nein  (Landesseite)
-	$url_org	= '#'.JURI::base().'index.php/component/clm/\?view=#';
-	$url_trans	= JURI::base()."index.php?option=com_clm_ext&view=clm_ext&source=$source_id&ext_view=";
+	$url_org	= '#'.URI::base().'index.php/component/clm/\?view=#';
+	$url_trans	= URI::base()."index.php?option=com_clm_ext&view=clm_ext&source=$source_id&ext_view=";
 	$data3		= preg_replace ( $url_org, $url_trans, $data3, -1, $anz13 );
 	if ($anz13 == 0) {
-		$url_org	= '#'.JURI::base().'index.php/component/clm\?view=#';
-		$url_trans	= JURI::base()."index.php?option=com_clm_ext&view=clm_ext&source=$source_id&ext_view=";
+		$url_org	= '#'.URI::base().'index.php/component/clm\?view=#';
+		$url_trans	= URI::base()."index.php?option=com_clm_ext&view=clm_ext&source=$source_id&ext_view=";
 		$data3		= preg_replace ( $url_org, $url_trans, $data3, -1, $anz13a );
 	}
 	// Alle anderen ersetzen - Suchmaschinenfreundliche URLs auf gerufener Seite: Ja und mod_rewrite Nein  (sbrp.de)
-	$url_org	= '#'.JURI::base().'index.php/de/component/clm/\?view=#';             // und Mehrsprachigkeit mit Standard de              
-	$url_trans	= JURI::base()."index.php?option=com_clm_ext&view=clm_ext&source=$source_id&ext_view=";
+	$url_org	= '#'.URI::base().'index.php/de/component/clm/\?view=#';             // und Mehrsprachigkeit mit Standard de              
+	$url_trans	= URI::base()."index.php?option=com_clm_ext&view=clm_ext&source=$source_id&ext_view=";
 	$data3		= preg_replace ( $url_org, $url_trans, $data3, -1, $anz14 );
 	// Alle anderen ersetzen - Suchmaschinenfreundliche URLs auf gerufener Seite: Ja und mod_rewrite Ja     (Dessau)
-	$url_org	= '#'.JURI::base().'component/clm/\?view=#';
-	$url_trans	= JURI::base()."index.php?option=com_clm_ext&view=clm_ext&source=$source_id&ext_view=";
+	$url_org	= '#'.URI::base().'component/clm/\?view=#';
+	$url_trans	= URI::base()."index.php?option=com_clm_ext&view=clm_ext&source=$source_id&ext_view=";
 	$data3		= preg_replace ( $url_org, $url_trans, $data3, -1, $anz15 );
  	
 	$data = $data1.$data2.$data3;
 
 	// Bilderpfad ändern
 	$url_org	= '#'.$ext_url.DS.'components'.DS.'com_clm'.DS.'images#';
-	$url_trans	= JURI::base().'components'.DS.'com_clm_ext'.DS.'images';
+	$url_trans	= URI::base().'components'.DS.'com_clm_ext'.DS.'images';
 	$data		= preg_replace ( $url_org, $url_trans, $data );
 
 	// Hervorheben von ausgewählten Verein
@@ -667,7 +671,7 @@ else { echo "<br>kein String: "; var_dump($data); }
 	$treffer = strpos ( $data, 'marker-icon.png', 0 );
 	if ($treffer !== false AND $treffer > 0) {
 		// find start und ende der URL
-		$markerlink_ext = JURI::base().'components'.DS.'com_clm_ext'.DS.'images'.DS.'marker-icon.png';
+		$markerlink_ext = URI::base().'components'.DS.'com_clm_ext'.DS.'images'.DS.'marker-icon.png';
 	    $istart = 0;
 		$iend = 0;
 	    while ($istart < 150 AND ($treffer - $istart) > 0) {
@@ -694,6 +698,6 @@ echo $data;
 <br>
 
 <hr>
-<?php echo JText::_('END_NOTICE') ?><a href="<?php echo $ext_url;?>"><?php echo $ext_url1;?></a>
+<?php echo Text::_('END_NOTICE') ?><a href="<?php echo $ext_url;?>"><?php echo $ext_url1;?></a>
 <?php } ?>
  
