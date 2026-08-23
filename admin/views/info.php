@@ -11,13 +11,14 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Toolbar\ToolbarHelper;
+use Joomla\CMS\Language\Text;
 
 class CLM_EXTViewInfo
 {
 
 static function display ($tpl = NULL)
 {
-	ToolBarHelper::title(   JText::_( 'CLM Extern Komponente' ), 'generic.png' );
+	ToolBarHelper::title(   Text::_( 'CLM Extern Komponente' ), 'generic.png' );
 	ToolBarHelper::help( 'screen.clm_ext.info' );
 ?>
 <fieldset class="adminform">
