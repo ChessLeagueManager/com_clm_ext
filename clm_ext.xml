@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="4.0.0" method="upgrade">
 	<name>COM_CLM_EXT</name>
-	<creationDate>25.05.2026</creationDate>
+	<creationDate>24.08.2026</creationDate>
 	<author>CLM Projekt</author>
 	<copyright>(C) Copyright 2009-2026 by CLM Project</copyright>
 	<license>GPL</license>
 	<authorEmail>fishpoke@fishpoke.de</authorEmail>
 	<authorUrl>chessleaguemanager.org</authorUrl>
-	<version>5.0.0</version>
+	<version>5.1.0</version>
 	<description>
 		<![CDATA[
 		 <h3>CLM Extern Komponente :</h3>

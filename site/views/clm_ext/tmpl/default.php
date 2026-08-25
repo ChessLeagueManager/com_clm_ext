@@ -18,19 +18,21 @@ function unicode_umlaute($string = '') {
 	$replace = array("Ä", "Ö", "Ü", "ä", "ö", "ü", "ß", "é");
 	return str_replace($search, $replace, $string);		
 }
+require_once(JPATH_SITE.DS."components".DS."com_clm".DS."includes".DS."escape.php");
 
-$ext_view	= clm_ext_request_string('ext_view');
+$ext_view	= clm_escape(clm_ext_request_string('ext_view'));
 $saison		= clm_ext_request_int('saison');
 $liga		= clm_ext_request_int('liga');
 $runde		= clm_ext_request_int('runde');
-$dg		= clm_ext_request_int('dg');
+$dg			= clm_ext_request_int('dg');
 $tlnr		= clm_ext_request_int('tlnr');
-$zps		= clm_ext_request_string('zps');
+$zps		= clm_escape(clm_ext_request_string('zps'));
 $mglnr		= clm_ext_request_int('mglnr');
-$source_id  = clm_ext_request_string('source');
-$itemid		= clm_ext_request_string('Itemid');
-$detail		= clm_ext_request_string('detail');
-$pgn		= clm_ext_request_string('pgn');
+$source_id  = clm_escape(clm_ext_request_string('source'));
+$source_id = htmlspecialchars($source_id, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+$itemid		= clm_escape(clm_ext_request_string('Itemid'));
+$detail		= clm_escape(clm_ext_request_string('detail'));
+$pgn		= clm_escape(clm_ext_request_string('pgn'));
 
 if (!is_numeric($source_id)) {	// Aufruf über Menüeintrag
 	$url = $source_id;
@@ -123,8 +125,12 @@ if (substr($url,strlen($url)-1,1) == chr(92) ) { $url = substr($url,0,strlen($ur
 // Encode it to its punycode presentation
 	$url = $IDN->encode($url1);
 
-$ext_url 	= "http://".$url;
-$ext_url1 	= "http://".$url1;
+//$ext_url 	= "http://".$url;
+//$ext_url1 	= "http://".$url1;
+
+// FIX: XSS Prevention - Zeile 188-189
+$ext_url 	= htmlspecialchars("http://".$url, ENT_QUOTES, 'UTF-8');
+$ext_url1 	= htmlspecialchars("http://".$url1, ENT_QUOTES, 'UTF-8');
 
 //echo "<br>url:".$ext_url;
 //echo "<br>url1:".$ext_url1;
@@ -293,8 +299,8 @@ if (($data = @file_get_contents($link,false,$ctx)) === false) {
       $msg = "HTTPS request failed. Error was: " . $error_https['message'];
 	}
 }
-if ($msg != '') {
-	echo '<br>'.$msg;
+// if ($msg != '') {
+	// echo '<br>'.$msg; //
 	$db	= Factory::getDBO();
 	$query = 'SELECT * FROM #__clm_logging LIMIT 1';
 	$db->setQuery($query);
@@ -312,7 +318,7 @@ if ($msg != '') {
 		$db->setQuery($query);
 		$db->execute();
 	}
-}
+// } //
 	
 /*	$data		= file_get_contents ($link);
 if (is_string($data)) echo "<br>String: ".strlen($data);
@@ -698,6 +704,6 @@ echo $data;
 <br>
 
 <hr>
-<?php echo Text::_('END_NOTICE') ?><a href="<?php echo $ext_url;?>"><?php echo $ext_url1;?></a>
+<?php echo Text::_('END_NOTICE') ?><a href="<?php echo htmlspecialchars($ext_url, ENT_QUOTES, 'UTF-8');?>"><?php echo htmlspecialchars($ext_url1, ENT_QUOTES, 'UTF-8');?></a>
 <?php } ?>
  
